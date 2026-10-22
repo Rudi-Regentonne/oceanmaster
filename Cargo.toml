@@ -1,0 +1,28 @@
+[package]
+name = "oceanmaster"
+version = "0.1.0"
+edition = "2024"
+description = "Underwater and general image-quality metrics, as a library and a CLI"
+readme = "README.md"
+
+[features]
+default = ["cli"]
+# Pulls in the command-line binary. Library-only dependents can disable
+# the default features.
+cli = ["dep:clap", "dep:rayon", "dep:indicatif", "dep:comfy-table", "dep:csv"]
+
+[dependencies]
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "webp", "tiff", "bmp", "tga"] }
+thiserror = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive"], optional = true }
+rayon = { version = "1", optional = true }
+indicatif = { version = "0.17", optional = true }
+comfy-table = { version = "7", optional = true }
+csv = { version = "1", optional = true }
+
+[[bin]]
+name = "oceanmaster"
+path = "src/main.rs"
+required-features = ["cli"]
